@@ -9,6 +9,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }),
     ],
+    callbacks: {
+        async redirect({ url, baseUrl }) {
+            // Asegúrate de que el redirect vuelva a la URL base
+            return url.startsWith(baseUrl) ? url : baseUrl;
+        },
+    },
     pages: {
         signIn: "/login",
     }
